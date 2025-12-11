@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioGuard AI - Heart Disease Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+            color: #667eea;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card {
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <span class="text-3xl font-bold gradient-text">❤️ CardioGuard AI</span>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-purple-600 font-semibold" onclick="showSection('home')">Home</a>
+                    <a href="#features" class="nav-link text-gray-700 hover:text-purple-600 font-semibold" onclick="showSection('features')">Features</a>
+                    <a href="#predict" class="nav-link text-gray-700 hover:text-purple-600 font-semibold" onclick="showSection('predict')">Predict</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-purple-600 font-semibold" onclick="showSection('about')">About Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-12">
+        <!-- Home Section -->
+        <div id="home" class="section">
+            <div class="text-center mb-16">
+                <h1 class="text-6xl font-extrabold text-white mb-4">CardioGuard AI</h1>
+                <p class="text-2xl text-white opacity-90">Protecting Hearts with Artificial Intelligence</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="feature-card rounded-2xl p-8 text-white">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold mb-3">Accurate Prediction</h3>
+                    <p class="opacity-90">Advanced ML algorithms trained on thousands of medical records for reliable assessment.</p>
+                </div>
+                <div class="feature-card rounded-2xl p-8 text-white">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold mb-3">Instant Results</h3>
+                    <p class="opacity-90">Get your heart health assessment in seconds with just a few clicks.</p>
+                </div>
+                <div class="feature-card rounded-2xl p-8 text-white">
+                    <div class="text-5xl mb-4">🔒</div>
+                    <h3 class="text-2xl font-bold mb-3">Safe & Private</h3>
+                    <p class="opacity-90">Your data is processed securely and never stored on our servers.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl p-12 card">
+                <h2 class="text-4xl font-bold gradient-text mb-6">Why Choose CardioGuard AI?</h2>
+                <p class="text-gray-700 text-lg mb-6">
+                    Heart disease is the leading cause of death globally. Early detection can save lives. 
+                    CardioGuard AI uses cutting-edge artificial intelligence to analyze your health parameters 
+                    and provide an instant risk assessment.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div class="border-l-4 border-purple-600 pl-4">
+                        <h4 class="font-bold text-xl text-gray-800 mb-2">Machine Learning Powered</h4>
+                        <p class="text-gray-600">Logistic Regression model with 85%+ accuracy</p>
+                    </div>
+                    <div class="border-l-4 border-purple-600 pl-4">
+                        <h4 class="font-bold text-xl text-gray-800 mb-2">13 Health Indicators</h4>
+                        <p class="text-gray-600">Comprehensive analysis of critical health parameters</p>
+                    </div>
+                </div>
+                <button onclick="showSection('predict')" class="btn-gradient text-white font-bold py-4 px-8 rounded-xl mt-8 text-lg">
+                    Check Your Heart Health Now →
+                </button>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div id="features" class="section hidden">
+            <div class="bg-white rounded-3xl shadow-2xl p-12 card">
+                <h2 class="text-4xl font-bold gradient-text mb-8">Our Features</h2>
+                
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">🧠 Advanced AI Technology</h3>
+                        <p class="text-gray-700">Our model uses Logistic Regression trained on the UCI Heart Disease Dataset with over 1000+ patient records.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">📊 Comprehensive Analysis</h3>
+                        <p class="text-gray-700">We analyze 13 critical health parameters including age, blood pressure, cholesterol, ECG results, and more.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">⚡ Real-Time Processing</h3>
+                        <p class="text-gray-700">Get instant predictions with confidence scores showing the probability of heart disease risk.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">🎯 High Accuracy</h3>
+                        <p class="text-gray-700">Our model achieves 85%+ accuracy, validated through rigorous testing and cross-validation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction Section -->
+        <div id="predict" class="section hidden">
+            <div class="bg-white rounded-3xl shadow-2xl p-12 card">
+                <h2 class="text-4xl font-bold gradient-text mb-8 text-center">Heart Disease Prediction</h2>
+                <p class="text-center text-gray-600 mb-8">Enter your health parameters below to get an instant risk assessment</p>
+                
+                <form id="predictionForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Age -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Age (years)</label>
+                            <input type="number" id="age" name="age" min="1" max="120" value="50" required
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                        
+                        <!-- Sex -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Sex</label>
+                            <select id="sex" name="sex" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Chest Pain Type -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Chest Pain Type</label>
+                            <select id="cp" name="cp" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="0">Typical Angina</option>
+                                <option value="1">Atypical Angina</option>
+                                <option value="2">Non-anginal Pain</option>
+                                <option value="3">Asymptomatic</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Resting Blood Pressure -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Resting Blood Pressure (mm Hg)</label>
+                            <input type="number" id="trestbps" name="trestbps" min="80" max="200" value="120" required
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                        
+                        <!-- Cholesterol -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Serum Cholesterol (mg/dl)</label>
+                            <input type="number" id="chol" name="chol" min="100" max="600" value="200" required
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                        
+                        <!-- Fasting Blood Sugar -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Fasting Blood Sugar > 120 mg/dl</label>
+                            <select id="fbs" name="fbs" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Resting ECG -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Resting ECG Results</label>
+                            <select id="restecg" name="restecg" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="0">Normal</option>
+                                <option value="1">ST-T Wave Abnormality</option>
+                                <option value="2">Left Ventricular Hypertrophy</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Max Heart Rate -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Maximum Heart Rate Achieved</label>
+                            <input type="number" id="thalach" name="thalach" min="60" max="220" value="150" required
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                        
+                        <!-- Exercise Induced Angina -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Exercise Induced Angina</label>
+                            <select id="exang" name="exang" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        
+                        <!-- ST Depression -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">ST Depression (oldpeak)</label>
+                            <input type="number" id="oldpeak" name="oldpeak" min="0" max="10" step="0.1" value="1.0" required
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                        
+                        <!-- Slope -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Slope of Peak Exercise ST</label>
+                            <select id="slope" name="slope" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="0">Upsloping</option>
+                                <option value="1">Flat</option>
+                                <option value="2">Downsloping</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Number of Vessels -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Number of Major Vessels (0-3)</label>
+                            <select id="ca" name="ca" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Thalassemia -->
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Thalassemia</label>
+                            <select id="thal" name="thal" required
+                                    class="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                <option value="0">Normal</option>
+                                <option value="1">Fixed Defect</option>
+                                <option value="2">Reversible Defect</option>
+                                <option value="3">Unknown</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-gradient w-full text-white font-bold py-4 px-8 rounded-xl text-lg">
+                        🔍 Predict Heart Disease Risk
+                    </button>
+                </form>
+                
+                <!-- Loading Indicator -->
+                <div id="loading" class="hidden">
+                    <div class="loading"></div>
+                    <p class="text-center text-gray-600 mt-4">Analyzing your health data...</p>
+                </div>
+                
+                <!-- Result Section -->
+                <div id="result" class="hidden mt-8">
+                    <div id="resultContent" class="p-8 rounded-2xl"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Us Section -->
+        <div id="about" class="section hidden">
+            <div class="bg-white rounded-3xl shadow-2xl p-12 card">
+                <h2 class="text-4xl font-bold gradient-text mb-8">About CardioGuard AI</h2>
+                
+                <div class="space-y-6 text-gray-700">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">🎯 Our Mission</h3>
+                        <p class="text-lg">
+                            At CardioGuard AI, we believe that early detection saves lives. Our mission is to make 
+                            advanced heart disease screening accessible to everyone, everywhere, using the power 
+                            of artificial intelligence.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">🔬 The Science Behind</h3>
+                        <p class="text-lg mb-4">Our prediction model is built on:</p>
+                        <ul class="list-disc list-inside space-y-2 text-lg">
+                            <li><strong>Dataset:</strong> UCI Heart Disease Dataset (1000+ patient records)</li>
+                            <li><strong>Algorithm:</strong> Logistic Regression with StandardScaler normalization</li>
+                            <li><strong>Accuracy:</strong> 85%+ on test data</li>
+                            <li><strong>Features:</strong> 13 clinical parameters analyzed</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">📊 Key Health Indicators</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <p>✓ Age & Demographics</p>
+                                <p>✓ Chest Pain Analysis</p>
+                                <p>✓ Blood Pressure</p>
+                                <p>✓ Cholesterol Levels</p>
+                                <p>✓ Blood Sugar</p>
+                                <p>✓ ECG Results</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p>✓ Heart Rate</p>
+                                <p>✓ Exercise Response</p>
+                                <p>✓ ST Depression</p>
+                                <p>✓ Vessel Analysis</p>
+                                <p>✓ Thalassemia</p>
+                                <p>✓ And more...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">⚖️ Disclaimer</h3>
+                        <p class="text-lg bg-yellow-50 p-4 rounded-lg">
+                            CardioGuard AI is a screening tool designed to assess heart disease risk based on 
+                            provided health parameters. It is not intended to diagnose, treat, cure, or prevent 
+                            any disease. Always seek the advice of a qualified healthcare provider with any 
+                            questions regarding a medical condition.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">📧 Contact Us</h3>
+                        <p class="text-lg">
+                            Have questions or feedback? We'd love to hear from you!<br>
+                            📧 Email: shahivijayi145@gmail.com.com<br>
+                            🌐 Website: https://vijayshahidev.vercel.app/<br>
+                            📱 Phone: +919525758237
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-16 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-700">
+            <p class="font-semibold">© 2024 CardioGuard AI | Empowering Heart Health Through AI</p>
+            <p class="text-sm mt-2">Made with ❤️ for better heart health</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show/hide sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        // Form submission
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                age: document.getElementById('age').value,
+                sex: document.getElementById('sex').value,
+                cp: document.getElementById('cp').value,
+                trestbps: document.getElementById('trestbps').value,
+                chol: document.getElementById('chol').value,
+                fbs: document.getElementById('fbs').value,
+                restecg: document.getElementById('restecg').value,
+                thalach: document.getElementById('thalach').value,
+                exang: document.getElementById('exang').value,
+                oldpeak: document.getElementById('oldpeak').value,
+                slope: document.getElementById('slope').value,
+                ca: document.getElementById('ca').value,
+                thal: document.getElementById('thal').value
+            };
+            
+            // Show loading
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('result').classList.add('hidden');
+            
+            try {
+                // Send POST request to Flask backend
+                const response = await fetch('http://localhost:5000/api/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('loading').classList.add('hidden');
+                
+                // Display result
+                displayResult(data);
+                
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result').classList.remove('hidden');
+                document.getElementById('resultContent').innerHTML = `
+                    <div class="bg-red-100 border-l-4 border-red-500 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-red-800 mb-2">❌ Error</h3>
+                        <p class="text-red-700">Failed to connect to the server. Please make sure Flask is running on http://localhost:5000</p>
+                        <p class="text-red-600 text-sm mt-2">Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        });
+        
+        function displayResult(data) {
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            
+            if (data.prediction === 1) {
+                // High risk
+                resultContent.innerHTML = `
+                    <div class="bg-gradient-to-r from-red-500 to-pink-600 text-white p-8 rounded-2xl">
+                        <h3 class="text-3xl font-bold mb-4">⚠️ High Chance of Heart Disease Detected</h3>
+                        <p class="text-xl mb-2">Confidence: ${data.confidence}%</p>
+                        <p class="text-lg opacity-90 mb-6">
+                            Based on the analysis of your health parameters, the model indicates a higher probability of heart disease. 
+                            Please consult with a cardiologist or healthcare professional immediately for proper diagnosis and treatment.
+                        </p>
+                        <div class="bg-white bg-opacity-20 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold mb-3">📋 Recommended Actions:</h4>
+                            <ul class="space-y-2 text-lg">
+                                <li>📞 Schedule an appointment with a cardiologist</li>
+                                <li>🏥 Get a comprehensive cardiac evaluation</li>
+                                <li>💊 Discuss medication options if needed</li>
+                                <li>🥗 Consider lifestyle modifications</li>
+                                <li>🏃 Start a monitored exercise program</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Low risk
+                resultContent.innerHTML = `
+                    <div class="bg-gradient-to-r from-green-500 to-teal-600 text-white p-8 rounded-2xl">
+                        <h3 class="text-3xl font-bold mb-4">✅ No Heart Disease Detected</h3>
+                        <p class="text-xl mb-2">Confidence: ${data.confidence}%</p>
+                        <p class="text-lg opacity-90 mb-6">
+                            Great News! Based on the provided parameters, you have a low risk of heart disease. 
+                            However, continue maintaining a healthy lifestyle!
+                        </p>
+                        <div class="bg-white bg-opacity-20 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold mb-3">💚 Stay Healthy:</h4>
+                            <ul class="space-y-2 text-lg">
+                                <li>🥗 Maintain a balanced diet</li>
+                                <li>🏃 Regular exercise (150 min/week)</li>
+                                <li>🚭 Avoid smoking and excessive alcohol</li>
+                                <li>😊 Manage stress effectively</li>
+                                <li>🩺 Schedule regular health check-ups</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>

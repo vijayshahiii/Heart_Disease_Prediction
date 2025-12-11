@@ -1,0 +1,112 @@
+💙 CardioGuard AI
+Heart Disease Prediction using Machine Learning (Flask API + Web UI)
+
+Created with ❤️ by Vijay Shahi
+
+🚀 Overview
+
+CardioGuard AI is a machine-learning based web application that predicts the likelihood of heart disease using patient health metrics.
+This project uses:
+
+Logistic Regression (ML model)
+
+StandardScaler (feature scaling)
+
+Flask backend API
+
+Responsive Frontend (HTML + CSS + JS)
+
+The system takes user inputs (age, cholesterol, chest pain type, etc.), sends them to a Flask API, and returns:
+✔ Disease prediction (0 = No Disease, 1 = Disease)
+✔ Confidence score
+
+🧠 Features
+
+🔹 Accurate heart disease predictions
+
+🔹 Fully responsive frontend (Mobile, Tablet, Android, iPhone, Windows, Mac)
+
+🔹 Fast Flask API backend
+
+🔹 Input validation
+
+🔹 Machine Learning model saved using pickle
+
+🔹 Clean UI with a modern minimal hero section
+
+🔹 Copyright footer: Made with ❤️ by Vijay Shahi
+
+📊 Machine Learning
+
+Model used: Logistic Regression
+Steps performed:
+
+Load dataset
+
+Train-test split
+
+StandardScaler applied
+
+Model trained
+
+Accuracy measured
+
+Model + Scaler saved as .pkl files
+
+🗂 Project Structure
+Heart-Disease-AI/
+│── app.py                     # Flask backend
+│── heart_disease_model.pkl    # saved ML model
+│── scaler.pkl                 # saved StandardScaler
+│── templates/
+│     └── index.html           # frontend UI
+│── static/
+│     └── style.css            # styling
+│── requirements.txt
+│── README.md
+│── heart_disease_data.csv     # dataset (optional)
+
+⚙️ Installation
+pip install -r requirements.txt
+
+▶️ Running the App
+python app.py
+
+
+Now open:
+
+http://127.0.0.1:5000
+
+🔄 API Endpoint
+POST /api/predict
+Example JSON Input:
+{
+  "age": 56,
+  "sex": 1,
+  "cp": 2,
+  "trestbps": 142,
+  "chol": 245,
+  "fbs": 0,
+  "restecg": 1,
+  "thalach": 150,
+  "exang": 0,
+  "oldpeak": 1.2,
+  "slope": 2,
+  "ca": 0,
+  "thal": 2
+}
+
+Response:
+{
+  "prediction": 1,
+  "confidence": 0.87
+}
+
+❤️ Credits
+
+Made with ❤️ by Vijay Shahi
+AI + ML Enthusiast | Python Developer
+
+📜 License
+
+Free to use for learning & educational purposes.
